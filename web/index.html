@@ -41,11 +41,15 @@
   </head>
   <body>
     <script>
-      window.addEventListener('message', (event) => {
-        // Ensure you validate the origin if needed
-        console.log('Received message: ' + event.data);
-        // Handle the message from Flutter
-      });
+      function sendMessageToMobileApp(message) {
+        // Send a message back to the mobile app
+        MobileApp.postMessage('Hello back from Web App');
+      }
+      // window.addEventListener('message', (event) => {
+      //   // Ensure you validate the origin if needed
+      //   console.log('Received message: ' + event.data);
+      //   // Handle the message from Flutter
+      // });
       window.addEventListener('load', function (ev) {
         // Download main.dart.js
         _flutter.loader.loadEntrypoint({
@@ -60,5 +64,9 @@
         });
       });
     </script>
+    <h1>Flutter Web App HTML</h1>
+    <button onclick="sendMessageToMobileApp()">
+      Send Message to Mobile App
+    </button>
   </body>
 </html>
