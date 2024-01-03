@@ -1,8 +1,31 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'dart:html' as html;
 
 void main() {
+  createAndSendButton();
   runApp(const MyApp());
+}
+
+void createAndSendButton() {
+  final button = html.ButtonElement()
+    ..innerText = 'Send JSON to Mobile App'
+    ..onClick.listen((event) {
+      sendJsonMessageToMobileApp();
+    });
+  html.document.body?.children.add(button);
+}
+
+void sendJsonMessageToMobileApp() {
+  var jsonMessage = jsonEncode({
+    'message': 'Hello from Web App',
+    'data': [1, 2, 3, 4, 5]
+  });
+
+  // Here you can call a JavaScript function to send the data back to the mobile app
+  // For example, using JavaScript channels
+  html.window.alert('Sending JSON: $jsonMessage');
 }
 
 class MyApp extends StatelessWidget {
@@ -39,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    html.window.addEventListener('message', (event) {
+    html.window.addEventListener('WebApp', (event) {
       html.MessageEvent msg = event as html.MessageEvent;
 
       setState(() {
